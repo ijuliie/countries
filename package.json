@@ -1,0 +1,50 @@
+{
+  "name": "counries-xpcbss",
+  "version": "1.0.0",
+  "description": "Your challenge is to integrate with the [REST Countries API](https://restcountries.com/#api-endpoints-v2-all) to pull country data and display it like in the designs. Use React and TypeScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "webpack serve --config webpack.config.js --env env=development",
+    "build": "webpack --config webpack.config.js --env env=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://coinme-xwzxmi@git.codesubmit.io/coinme/counries-xpcbss"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.24.0",
+    "babel-loader": "^8.2.3",
+    "bootstrap": "^5.1.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.5.1",
+    "html-webpack-plugin": "^5.5.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "style-loader": "^3.3.1",
+    "ts-jest": "^27.0.7",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.6.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/preset-typescript": "^7.16.0",
+    "@babel/runtime": "^7.16.3",
+    "@testing-library/jest-dom": "^5.15.1",
+    "@types/jest": "^27.0.3",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "jest": "^27.4.0",
+    "typescript": "^4.5.2"
+  }
+}
