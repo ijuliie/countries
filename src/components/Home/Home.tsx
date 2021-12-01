@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import Input from "../Input/Input";
 import axios from "axios";
+import "./Home.css";
 
-interface ICountry {
+export interface ICountry {
   name: string;
   population: number;
   region: string;
@@ -17,25 +19,41 @@ const Home: React.FC = () => {
     ICountry[],
     (countries: ICountry[]) => void
   ] = useState(defaultCountry);
+  // const [region, setRegion] = useState<ICountry["region"]>("");
+
+  const [country, setCountry] = useState<ICountry["name"]>("");
 
   useEffect(() => {
     // fetch countries
     axios
-      .get<ICountry[]>("https://restcountries.com/v2/all")
+      .get<ICountry[]>(`https://restcountries.com/v2/all`)
       .then((response) => {
         setCountries(response.data);
       });
   }, []);
+  
+
+  // useEffect(() => {
+  //   // fetch countries
+  //   axios
+  //     .get<ICountry[]>(`https://restcountries.com/v2/name/${country}`)
+  //     .then((response) => {
+  //      console.log(response)
+  //     });
+  // }, [country]);
 
   return (
-    <div data-testid="countries-list">
-      {countries.map((country, i) => {
-        return (
-          <div data-testid="country" key={i}>
-            {country.name}
-          </div>
-        );
-      })}
+    <div className="home-container">
+      <Input country={country} setCountries={setCountries} setCountry={setCountry} />
+      <div className="countries-list" data-testid="countries-list">
+        {countries.map((country, i) => {
+          return (
+            <div data-testid="country" key={i}>
+              {country.name}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
