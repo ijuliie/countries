@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ICountry, ICountry as Props } from "../Home/Home";
+import { ICountry, ICountry as Props } from "../CountriesList/CountriesList";
 import axios from "axios";
 
 interface IProps {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Input from "../Input/Input";
 import axios from "axios";
-import "./Home.css";
+import "./CountriesList.css";
 
 export interface ICountry {
   flag: string
@@ -14,7 +14,7 @@ export interface ICountry {
 // create a variable to hold state until it is retrieved from the API
 const defaultCountry: ICountry[] = [];
 
-const Home: React.FC = () => {
+const CountriesList: React.FC = () => {
   const [countries, setCountries]: [
     // tells typescript that I'm assigning a specific type to state
     ICountry[],
@@ -33,7 +33,6 @@ const Home: React.FC = () => {
       });
   }, []);
   
-
 
 
   return (
@@ -59,4 +58,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default CountriesList;
