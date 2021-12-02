@@ -4,6 +4,7 @@ import axios from "axios";
 import "./Home.css";
 
 export interface ICountry {
+  flag: string
   name: string;
   population: number;
   region: string;
@@ -33,23 +34,23 @@ const Home: React.FC = () => {
   }, []);
   
 
-  // useEffect(() => {
-  //   // fetch countries
-  //   axios
-  //     .get<ICountry[]>(`https://restcountries.com/v2/name/${country}`)
-  //     .then((response) => {
-  //      console.log(response)
-  //     });
-  // }, [country]);
+
 
   return (
     <div className="home-container">
       <Input country={country} setCountries={setCountries} setCountry={setCountry} />
       <div className="countries-list" data-testid="countries-list">
         {countries.map((country, i) => {
+          console.log(country)
           return (
-            <div data-testid="country" key={i}>
-              {country.name}
+            <div className='card' data-testid="country" key={i}>
+              <div className='img-container'>
+                <img className='img' src={country.flag} />
+              </div>
+              <p>{country.name}</p>
+              <p>Population: {country.population}</p>
+              <p>Region: {country.region}</p>
+              <p>Capital: {country.capital}</p>
             </div>
           );
         })}
