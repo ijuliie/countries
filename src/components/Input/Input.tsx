@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ICountry as Props } from "../CountriesList/CountriesList";
 
 interface IProps {
