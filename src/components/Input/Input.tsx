@@ -1,32 +1,15 @@
 import React, { useState } from "react";
-import { ICountry, ICountry as Props } from "../CountriesList/CountriesList";
-import axios from "axios";
+import { ICountry as Props } from "../CountriesList/CountriesList";
 
 interface IProps {
   country: Props["name"];
-  setCountry: React.Dispatch<React.SetStateAction<Props["name"]>>;
-  setCountries: (countries: ICountry[]) => void;
+  handleChange: React.ChangeEventHandler<HTMLInputElement>
+  handleSubmit: React.FormEventHandler<HTMLFormElement>
 }
 
-const Input: React.FC<IProps> = ({ country, setCountries, setCountry }) => {
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = e.target.value;
-    setCountry(value);
-  };
-
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    axios
-      .get<ICountry[]>(`https://restcountries.com/v2/name/${country}`)
-      .then((response) => {
-        setCountries(response.data);
-      });
-    setCountry(country);
-    setCountry("");
-  };
-
+const Input: React.FC<IProps> = ({ country, handleSubmit, handleChange }) => {
   return (
-    <form onSubmit={handleSubmit}>
+    <form data-testid="search" onSubmit={handleSubmit}>
       <input
         data-testid="input"
         name="country"
