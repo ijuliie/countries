@@ -11,7 +11,7 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<CountriesList />} />
-        <Route path='/:details' element={<CountryDetails />} />
+        <Route path=':name' element={<CountryDetails />} />
       </Routes>
     </div>
   );
