@@ -51,7 +51,11 @@ const CountryDetails: React.FC = () => {
     <div>
       {details.map((data) => {
         return (
-          <div className="details-wrapper">
+          <div
+            key={data.name}
+            data-testid="details"
+            className="details-wrapper"
+          >
             <div className="details-img-wrapper">
               <img className="img" src={data.flag} />
             </div>
@@ -81,8 +85,8 @@ const CountryDetails: React.FC = () => {
                   {data.borders
                     ? data.borders.map((country) => (
                         <span key={country}>
-                          {countries.getName(country, "en")} 
-                        </span> 
+                          {countries.getName(country, "en")}
+                        </span>
                       ))
                     : ""}
                 </div>
