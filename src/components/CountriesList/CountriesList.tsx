@@ -9,12 +9,7 @@ export interface ICountry {
   name: string;
   population: number;
   region: string;
-  subRegion: string;
   capital: string;
-  topLevelDomain: Array<string>;
-  currencies: string;
-  languages: Array<string>;
-  borderCountries: Array<string>;
 }
 [];
 
