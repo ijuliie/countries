@@ -2,14 +2,21 @@ import React, { useEffect, useState } from "react";
 import Input from "../Input/Input";
 import axios from "axios";
 import "./CountriesList.css";
+import { Link } from "react-router-dom";
 
 export interface ICountry {
-  flag: string
+  flag: string;
   name: string;
   population: number;
   region: string;
+  subRegion: string;
   capital: string;
+  topLevelDomain: Array<string>;
+  currencies: string;
+  languages: Array<string>;
+  borderCountries: Array<string>;
 }
+[];
 
 // create a variable to hold state until it is retrieved from the API
 const defaultCountry: ICountry[] = [];
@@ -20,8 +27,6 @@ const CountriesList: React.FC = () => {
     ICountry[],
     (countries: ICountry[]) => void
   ] = useState(defaultCountry);
-  // const [region, setRegion] = useState<ICountry["region"]>("");
-
   const [country, setCountry] = useState<ICountry["name"]>("");
 
   useEffect(() => {
@@ -32,24 +37,43 @@ const CountriesList: React.FC = () => {
         setCountries(response.data);
       });
   }, []);
-  
 
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    axios
+      .get<ICountry[]>(`https://restcountries.com/v2/name/${country}`)
+      .then((response) => {
+        setCountries(response.data);
+      });
+    setCountry(country);
+    setCountry("");
+  };
+
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value;
+    setCountry(value);
+  };
 
   return (
     <div className="home-container">
-      <Input country={country} setCountries={setCountries} setCountry={setCountry} />
+      <Input
+        country={country}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+      />
       <div className="countries-list" data-testid="countries-list">
         {countries.map((country, i) => {
-          console.log(country)
           return (
-            <div className='card' data-testid="country" key={i}>
-              <div className='img-container'>
-                <img className='img' src={country.flag} />
-              </div>
-              <p>{country.name}</p>
-              <p>Population: {country.population}</p>
-              <p>Region: {country.region}</p>
-              <p>Capital: {country.capital}</p>
+            <div className="card" data-testid="country" key={i}>
+              <Link to={`${country.name}`}>
+                <div className="img-container">
+                  <img className="img" src={country.flag} />
+                </div>
+                <p>{country.name}</p>
+                <p>Population: {country.population}</p>
+                <p>Region: {country.region}</p>
+                <p>Capital: {country.capital}</p>
+              </Link>
             </div>
           );
         })}
