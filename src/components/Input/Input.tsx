@@ -14,7 +14,7 @@ const Input: React.FC<IProps> = ({ country, handleSubmit, handleChange }) => {
         data-testid="input"
         name="country"
         type="text"
-        value={country}
+        value={country.common}
         onChange={handleChange}
         placeholder="Search for a country..."
       />

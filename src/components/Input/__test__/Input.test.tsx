@@ -12,7 +12,7 @@ describe("input element", () => {
   test("should render input element", async () => {
     render(
       <Input
-        country={""}
+        country={{common: ""}}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
       />
@@ -26,7 +26,7 @@ describe("input element", () => {
   test("onChange handler should be called", async () => {
     render(
       <Input
-        country={""}
+        country={{common: ""}}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
       />
@@ -42,7 +42,7 @@ describe("input element", () => {
   test("input is empty on submit", () => {
     render(
       <Input
-        country={""}
+        country={{common: ""}}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
       />
