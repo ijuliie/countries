@@ -1,26 +1,30 @@
 const mockResponse = {
   data: [
     {
-      name: "Brazil",
-      flag: "https://flagcdn.com/br.svg",
-      nativeName: "Brasil",
+      name: {
+        common: "Brazil",
+        nativeName: {
+          por: {
+            offical: "República Federativa do Brasil"
+          }
+        }
+      },
+      flags: {
+        png: "https://flagcdn.com/br.png"
+      },
       population: 212559409,
       region: "Americas",
-      subRegion: "South America",
+      subregion: "South America",
       capital: "Brasília",
-      topLevelDomain: ".br",
-      currencies: [
-        {
-          code: "BRL",
-          name: "Brazilian real",
-          symbol: "RS"
+      tld: [".br"],
+      currencies: {
+        BRL: {
+          name: "Brazilian real"
         }
-      ],
-      languages: [
-        {
-          name: "Portuguese"
-        }
-      ],
+      },
+      languages: {
+        por: "Portuguese"
+      },
       borders: ["ARG", "BOL", "COL"]
     }
   ]
