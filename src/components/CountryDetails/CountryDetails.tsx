@@ -7,24 +7,28 @@ countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
 interface IDetails {
   data: {
-    flag: string;
-    name: string;
-    nativeName: string;
+    flags: { png: string };
+    name: Name;
     population: number;
     region: string;
-    subRegion: string;
+    subregion: string;
     capital: string;
-    topLevelDomain: Array<string>;
+    tld: Array<string>;
     currencies: {
-      [key: string]: Currencies;
+      [key: string]: string;
     };
-    languages: { name: string }[];
+    languages: object;
     borders: Array<string>;
   }[];
 }
 
-interface Currencies {
-  name: string;
+interface Name {
+  common: string;
+  nativeName: {
+    [key: string]: {
+      official: string;
+    };
+  };
 }
 
 const CountryDetails: React.FC = () => {
@@ -33,17 +37,22 @@ const CountryDetails: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get(`https://restcountries.com/v2/name/${match?.params.name}`)
+      .get(`https://restcountries.com/v3.1/name/${match?.params.name}`)
       .then((response) => {
         setDetails(response.data);
       });
   }, []);
 
-  const checkIndex = (index: number, arr: Array<object>) => {
-    if (index != arr.length) {
-      return ", ";
-    } else {
-      return "";
+  // loop through object with different keys
+  const getNativeName = (data: any) => {
+    for (let key in data.nativeName) {
+      return data.nativeName[key].official;
+    }
+  };
+
+  const getCurrency = (data: any) => {
+    for (let key in data) {
+      return data[key].name;
     }
   };
 
@@ -52,33 +61,38 @@ const CountryDetails: React.FC = () => {
       {details.map((data) => {
         return (
           <div
-            key={data.name}
+            key={data.name.common}
             data-testid="details"
             className="details-wrapper"
           >
             <div className="details-img-wrapper">
-              <img className="img" src={data.flag} />
+              <img className="img" src={data.flags.png} />
             </div>
             <div>
               <div>
-                <div>{data.name}</div>
-                <div>Native Name: {data.nativeName}</div>
+                <div>{data.name.common}</div>
+                <div>Native Name: {getNativeName(data.name)}</div>
                 <div>Population: {data.population}</div>
                 <div>Region: {data.region}</div>
-                <div>Sub Region: {data.subRegion}</div>
+                <div>Sub Region: {data.subregion}</div>
                 <div>Capital: {data.capital}</div>
-                <div>Top Level Domain: {data.topLevelDomain[0]}</div>
-                <div>Currencies: {data.currencies[0].name}</div>
+                <div>Top Level Domain: {data.tld[0]}</div>
+                <div>Currencies: {getCurrency(data.currencies)}</div>
                 <div>
                   Languages:{" "}
-                  {/* 3rd argument in map function refers back to the original array that is being looped through */}
-                  {data.languages.map((language, index, arr) => (
-                    <span key={index}>
-                      {language.name}
-                      {/* if index is not equal length of array minus 1, add a comma */}
-                      {checkIndex(index, arr)}
-                    </span>
-                  ))}
+                  {Object.entries(data.languages).map(
+                    // 3rd argument in map function refers back to the original array that is being looped through
+                    ([_, val], index, arr) => {
+                      {
+                        // if index is not equal length of array minus 1, add a comma
+                      }
+                      if (index != arr.length - 1) {
+                        return `${val}, `;
+                      } else {
+                        return val;
+                      }
+                    }
+                  )}
                 </div>
                 <div>
                   Border Countries:{" "}
