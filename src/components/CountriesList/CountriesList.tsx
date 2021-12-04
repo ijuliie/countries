@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Filter from "../Filter/Filter";
 import Input from "../Input/Input";
 import axios from "axios";
 import "./CountriesList.css";
-import { Link } from "react-router-dom";
 
 export interface ICountry {
-  flag: string;
-  name: string;
+  flags: { png: string };
+  name: { common: string };
   population: number;
   region: string;
   capital: string;
@@ -22,12 +23,13 @@ const CountriesList: React.FC = () => {
     ICountry[],
     (countries: ICountry[]) => void
   ] = useState(defaultCountry);
-  const [country, setCountry] = useState<ICountry["name"]>("");
+  const [country, setCountry] = useState<ICountry["name"]>({ common: "" });
+  const [region, setRegion] = useState<ICountry["region"]>("");
 
   useEffect(() => {
     // fetch countries
     axios
-      .get<ICountry[]>(`https://restcountries.com/v2/all`)
+      .get<ICountry[]>(`https://restcountries.com/v3.1/all`)
       .then((response) => {
         setCountries(response.data);
       });
@@ -36,17 +38,33 @@ const CountriesList: React.FC = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     axios
-      .get<ICountry[]>(`https://restcountries.com/v2/name/${country}`)
+      .get<ICountry[]>(`https://restcountries.com/v3.1/name/${country.common}`)
       .then((response) => {
         setCountries(response.data);
       });
-    setCountry(country);
-    setCountry("");
+    setCountry({
+      common: ""
+    });
   };
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
-    setCountry(value);
+    setCountry({
+      common: value,
+    });
+  };
+
+  const handleSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (
+    e
+  ) => {
+    const value = e.target.value;
+    // setRegion(value)
+    axios
+      .get(`https://restcountries.com/v3.1/region/${value}`)
+      .then((response) => {
+        setCountries(response.data);
+        // console.log(response);
+      });
   };
 
   return (
@@ -56,15 +74,16 @@ const CountriesList: React.FC = () => {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
       />
+      <Filter handleSelectChange={handleSelectChange} setRegion={setRegion} />
       <div className="countries-list" data-testid="countries-list">
         {countries.map((country, i) => {
           return (
             <div className="card" data-testid="country" key={i}>
-              <Link to={`${country.name}`}>
+              <Link to={`${country.name.common}`}>
                 <div className="img-container">
-                  <img className="img" src={country.flag} />
+                  <img className="img" src={country.flags.png} />
                 </div>
-                <p>{country.name}</p>
+                <p>{country.name.common}</p>
                 <p>Population: {country.population}</p>
                 <p>Region: {country.region}</p>
                 <p>Capital: {country.capital}</p>
