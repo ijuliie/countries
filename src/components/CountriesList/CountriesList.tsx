@@ -86,7 +86,7 @@ const CountriesList: React.FC = () => {
                   <h3 className="card-title">{country.name.common}</h3>
                   <p>
                     <span className="label">Population:</span>{" "}
-                    {country.population}
+                    {country.population.toLocaleString()}
                   </p>
                   <p>
                     <span className="label">Region:</span> {country.region}
