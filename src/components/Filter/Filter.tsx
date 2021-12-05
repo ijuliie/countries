@@ -26,7 +26,7 @@ const Filter: React.FC<IProps> = ({ handleSelectChange }) => {
             key={region}
             value={region}
           >
-            {region}
+            {region.charAt(0).toUpperCase() + region.slice(1)}
           </option>
         ))}
       </select>
