@@ -37,8 +37,7 @@ interface Name {
 const CountryDetails: React.FC = () => {
   const [details, setDetails] = useState<IDetails["data"]>([]);
   const match = useMatch(":name");
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCountryDetails(match?.params.name);
@@ -68,9 +67,12 @@ const CountryDetails: React.FC = () => {
   return (
     <div className="details-container">
       <div className="back-button-wrapper">
-        <button onClick={() => {
-          navigate(-1)
-        }} className="back button">
+        <button
+          onClick={() => {
+            navigate(-1);
+          }}
+          className="back button"
+        >
           <FontAwesomeIcon
             style={{ paddingRight: "10px" }}
             icon={faArrowLeft}
@@ -101,16 +103,19 @@ const CountryDetails: React.FC = () => {
                     {getNativeName(data.name)}
                   </p>
                   <p>
-                    <span className="detail-label">Population:</span> {data.population}
+                    <span className="detail-label">Population:</span>{" "}
+                    {data.population.toLocaleString()}
                   </p>
                   <p>
                     <span className="detail-label">Region:</span> {data.region}
                   </p>
                   <p>
-                    <span className="detail-label">Sub Region:</span> {data.subregion}
+                    <span className="detail-label">Sub Region:</span>{" "}
+                    {data.subregion}
                   </p>
                   <p>
-                    <span className="detail-label">Capital:</span> {data.capital}
+                    <span className="detail-label">Capital:</span>{" "}
+                    {data.capital}
                   </p>
                 </div>
                 <div className="details-content-2">
@@ -140,29 +145,29 @@ const CountryDetails: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <div style={{ marginTop: "30px" }}>
-                <span className="label">Border Countries: </span>
-                <div style={{ display: "flex", flexWrap: "wrap" }}>
+              <div className="border-wrapper">
+                <div className="border-heading-wrapper">
+                  <span className="detail-label">Border Countries: </span>
+                </div>
+                <div>
                   {data.borders
                     ? data.borders.map((country) => (
-                        <div>
-                          <button
-                            className="border button"
-                            onClick={() =>
-                              fetchCountryDetails(
-                                countries.getName(country, "en")
-                              )
-                            }
-                            key={country}
+                        <button
+                          className="border button"
+                          onClick={() =>
+                            fetchCountryDetails(
+                              countries.getName(country, "en")
+                            )
+                          }
+                          key={country}
+                        >
+                          <Link
+                            className="links"
+                            to={`/${countries.getName(country, "en")}`}
                           >
-                            <Link
-                              className="links"
-                              to={`/${countries.getName(country, "en")}`}
-                            >
-                              {countries.getName(country, "en")}
-                            </Link>
-                          </button>
-                        </div>
+                            {countries.getName(country, "en")}
+                          </Link>
+                        </button>
                       ))
                     : ""}
                 </div>
