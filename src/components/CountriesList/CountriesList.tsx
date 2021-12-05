@@ -24,7 +24,6 @@ const CountriesList: React.FC = () => {
     (countries: ICountry[]) => void
   ] = useState(defaultCountry);
   const [country, setCountry] = useState<ICountry["name"]>({ common: "" });
-  const [region, setRegion] = useState<ICountry["region"]>("");
 
   useEffect(() => {
     // fetch countries
@@ -43,7 +42,7 @@ const CountriesList: React.FC = () => {
         setCountries(response.data);
       });
     setCountry({
-      common: ""
+      common: "",
     });
   };
 
@@ -58,35 +57,44 @@ const CountriesList: React.FC = () => {
     e
   ) => {
     const value = e.target.value;
-    // setRegion(value)
     axios
       .get(`https://restcountries.com/v3.1/region/${value}`)
       .then((response) => {
         setCountries(response.data);
-        // console.log(response);
       });
   };
 
   return (
     <div className="home-container">
-      <Input
-        country={country}
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-      />
-      <Filter handleSelectChange={handleSelectChange} setRegion={setRegion} />
+      <div className="form-container">
+        <Input
+          country={country}
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+        />
+        <Filter handleSelectChange={handleSelectChange} />
+      </div>
       <div className="countries-list" data-testid="countries-list">
         {countries.map((country, i) => {
           return (
             <div className="card" data-testid="country" key={i}>
-              <Link to={`${country.name.common}`}>
+              <Link className="links" to={`${country.name.common}`}>
                 <div className="img-container">
                   <img className="img" src={country.flags.png} />
                 </div>
-                <p>{country.name.common}</p>
-                <p>Population: {country.population}</p>
-                <p>Region: {country.region}</p>
-                <p>Capital: {country.capital}</p>
+                <div className="content">
+                  <h3 className="card-title">{country.name.common}</h3>
+                  <p>
+                    <span className="label">Population:</span>{" "}
+                    {country.population}
+                  </p>
+                  <p>
+                    <span className="label">Region:</span> {country.region}
+                  </p>
+                  <p>
+                    <span className="label">Capital:</span> {country.capital}
+                  </p>
+                </div>
               </Link>
             </div>
           );
